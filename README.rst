@@ -14,6 +14,13 @@ Router runs a python script with this library that reads metrics periodically an
 
 Python 3.5+
 
+Installation:
+==============
+
+.. code-block:: shell
+
+    pip3 install pymh-z19b-serial
+
 Library Usage examples:
 ========================
 
