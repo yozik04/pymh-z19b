@@ -1,18 +1,14 @@
 language: python
 cache: pip
-
 python:
-  - 3.5
-  - 3.6
-  - pypy3.5
-
+- 3.5
+- 3.6
+- pypy3.5
 install:
-  - pip install -r requirements.txt
-  - pip install -e .
-
+- pip install -r requirements.txt
+- pip install -e .
 script:
-  - pytest
-
+- pytest
 deploy:
   provider: pypi
   user: yozik04
@@ -21,4 +17,4 @@ deploy:
   on:
     tags: true
   password:
-    secure: IXSg5Q83/RT6Rt/2Gn+fvyWNVTP8dFZVdG3Eb0OTul0IDgRfqVrsv+KVVOeJYhKfj0+F/w4G2Up0131G0zIxnZPn3XjJ4EzQd5n+S8eCrEVLkfj+42S5kSxbM25uRkoLmK6zggRKiFGbdz8QH53GHiNU1Z1GNFu2tWEbG7WR9hsyn5ed2rBEnGAfjfV6OJg7+xh6wrTtM+0iDsIgz4pS5mYQLRwauHpVUh0djWLaEkwotTk0APw09mom+ICNwqgabMWCYfRKkyZiGOkU3jVrS7OUH6FZHFER/zVyqebmbahpuRkO73Gc+2VBHugqNuASDi+Dtz6nUSl4G/2je6gOfCCnDAwRjRgMSGxfXYyNcZ9fq+LcIv6G1xBDazSWu1IkfuaroDpHdfEReU9XC41s9q3ck/yLfyegYIyrDv1UyqomOGrdSVE9Yym3KeSidqBA1MgwY0nkPckvV8fm1aDoRYuChE2aTBtyZqhOhd6XNaqq7BCV+9OgitpDoFWQQ/1frs5LWW7pxRBChhpOwXQoukcSdDfgq4wGFMruLMKuMoFYSNAB+Lodkps+7zs8GjErCRF+Pt6orWngGemeKlZLN2h4kb14DJpGFg4+aFPEs9F9zYbV0SBILRMlKiF6UR9/t0DROnNByvv2Xsq8dsdhhEelK2goZmfKXUhu+6XrhgU=
+    secure: U7SHF0d569qWhWYdL66mPzwy0lLjiRKS8JBCy2QOti8iBEFXkd6pRbRIkO1oifl9E3NS4W+T8vVCNrwtsGrl7W8mR41S6oLaYA8NdBrzAdO6G4zN5rmQFNmnl12dmNQUMirOn9XpaEldUoapKWok4SMhhkw4xsnLcXcdaQrmvUGmBzsRq0tIfZVzvhSXRKr2exegHC5m6Iw5RrLsKE7OdnaBo7kEdWxIhM2Q+g8HuP68Hoj4GYoJ1yxekS4gz+uM+oo74BG9xeRSSqdl0nSlAXt3ENZkcqOQzc3D3pE7ZEcN4YrOGgYfzkZnrB4qG7G2yHkb0j+Q2AJisVIdWRBUSE2kUsxLJgrIH3UhHNNU2MxLsHwVNbSBt3KXQxpnZexwnXm8R1z8po+U/ILzMi3xenTp/8bWKovqWVOx5ctCGvPLctIVMQk9FKNLKIKjaxjWRMv1rq0ioa6WEdh2yJYIG7FndhMzAUACeh17NpbdjTQOLSrefJ14MVbfzwNsbeCRoimVX2EelUN0cWLcesNKgFXNIRb1o2rtsOTsAFTDm819CnTkNuZ5KMY4dLVl/9PQjEJpt8qAxm6gJKb2Ylz8ZReQGnF6SWyLM+gNeYuK1dJxu//Nb+BT/5dCy9nlQB2lI1MIsAe2vyYtqFxmuzCjJnnsJ8KwcytC0KeJr3QI1sQ=
