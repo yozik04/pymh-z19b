@@ -56,6 +56,6 @@ Uses `asyncio` and `pyserial-asyncio`
 
 
 
-.. |build-status| image:: https://travis-ci.org/yozik04/pymh_z19b.svg?branch=master
-   :target: https://travis-ci.org/yozik04/pymh_z19b
+.. |build-status| image:: https://travis-ci.org/yozik04/pymh-z19b.svg?branch=master
+   :target: https://travis-ci.org/yozik04/pymh-z19b
    :alt: Build status
