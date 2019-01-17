@@ -1,5 +1,6 @@
 import asyncio
 import serial_asyncio
+import binascii
 
 from mh_z19b.common import SensorMixin
 
@@ -14,14 +15,25 @@ class Sensor(SensorMixin):
     async def open_serial(self, **kwargs):
         (self.reader, self.writer) = await serial_asyncio.open_serial_connection(loop=self.loop, **kwargs)
 
-    def send_request(self, payload, *args):
+    async def send_request(self, payload, *args):
         data = self._prepare_request(payload, *args)
-        return self.writer.write(data)
+        self.writer.write(data)
+        await self.writer.drain()
 
     async def read_metric(self):
         return await self.send_receive(self.READ_METRIC)
 
     async def send_receive(self, command, *args):
-        self.send_request(command, *args)
-        response = await self.reader.readexactly(9)
-        return self.parse_response(response)
+        await self.send_request(command, *args)
+        while True:
+            buf = bytearray()
+            while True:
+                c = await self.reader.read(1)
+                buf.append(ord(c))
+
+                if len(buf) == 9:
+                    break
+
+            result = self.parse_response(buf)
+            if result is not None:
+                return result

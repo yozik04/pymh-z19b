@@ -10,6 +10,7 @@ class Sensor(SensorMixin):
     return self.serial.write(data)
 
   def send_receive(self, command, *args):
+    self.serial.read(self.serial.in_waiting)  # flush all data in input buffer
     self.send_request(command, *args)
     return self.parse_response(self.serial.read(9))
 
