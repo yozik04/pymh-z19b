@@ -32,7 +32,7 @@ def parse_requirements(filename, parent=None):
 
 setup(
   name='pymh-z19b-serial',
-  version='1.0.0',
+  version='1.0.2',
   packages=['mh_z19b'],
   url='https://github.com/yozik04/pymh-z19b',
   license='MIT',

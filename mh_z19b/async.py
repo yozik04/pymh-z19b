@@ -24,16 +24,12 @@ class Sensor(SensorMixin):
         return await self.send_receive(self.READ_METRIC)
 
     async def send_receive(self, command, *args):
-        await self.send_request(command, *args)
         while True:
-            buf = bytearray()
-            while True:
-                c = await self.reader.read(1)
-                buf.append(ord(c))
-
-                if len(buf) == 9:
-                    break
+            await self.send_request(command, *args)
+            buf = await asyncio.wait_for(self.reader.readexactly(9), timeout=3)
 
             result = self.parse_response(buf)
             if result is not None:
                 return result
+            else:
+                await asyncio.sleep(1)
