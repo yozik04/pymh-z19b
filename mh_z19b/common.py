@@ -2,34 +2,45 @@ import typing
 
 
 class SensorMixin(object):
-  READ_METRIC = b'\xFF\x01\x86\x00\x00\x00\x00\x00'
-  START_CALIBRATION = b'\xFF\x01\x87\x00\x00\x00\x00\x00'
-  SET_AUTOCALIBRARTION = b'\xFF\x01\x79%c\x00\x00\x13\x88\x00'
-  SET_DETECTION_RANGE = b'\xFF\x01\x99\x00\x00\x00\x13\x88\x00'
+    READ_METRIC = b'\xFF\x01\x86\x00\x00\x00\x00\x00'
+    START_CALIBRATION = b'\xFF\x01\x87\x00\x00\x00\x00\x00'
+    SET_AUTO_CALIBRARTION = b'\xFF\x01\x79%c\x00\x00\x00\x00\x00'  # on or off
+    SET_DETECTION_RANGE = b'\xFF\x01\x99\x00\x00\x00%c%c\x00'  # 2000 or 5000
 
-  def __init__(self, serial):
-    self.serial = serial
+    def __init__(self, serial):
+        self.serial = serial
 
-  def _prepare_request(self, payload, *args):
-    assert len(payload) == 8
-    assert isinstance(payload, typing.ByteString)
-    payload = payload % tuple(*args)
+    def _prepare_request(self, payload, *args):
+        assert len(payload) == 8, "Wrong payload length"
+        assert isinstance(payload, typing.ByteString), "Wrong payload type"
+        payload = payload % tuple(*args)
 
-    csum = self._checksum(payload)
-    data = payload + csum
-    assert len(data) == 9
+        csum = self._checksum(payload)
+        data = payload + csum
+        assert len(data) == 9
 
-    return data
+        return data
 
-  @staticmethod
-  def _checksum(payload):
-    checksum = sum(bytearray(payload[0:8]))
-    checksum = 0xff - checksum & 0xff
+    @staticmethod
+    def _checksum(payload):
+        checksum = sum(bytearray(payload[0:8]))
+        checksum = 0xff - checksum & 0xff
 
-    return bytes([checksum])
+        return bytes([checksum])
 
-  def parse_response(self, payload):
-      if payload[0] == 0xff:
-          if payload[1] == 0x86:  # Read command
-              co2 = (payload[2]<<8)+payload[3]
-              return co2
+    def parse_response(self, payload):
+        assert len(payload) == 9, "Wrong payload length"
+        assert self._checksum(payload) == payload[8], "CRC error"
+        if payload[0] == 0xff:
+            if payload[1] == 0x86:  # Read command
+                co2 = (payload[2] << 8) + payload[3]
+                temp = payload[4] - 40
+                return {"co2": co2, "temp": temp}
+            elif payload[1] == 0x99:  # detection range set
+                return True
+            elif payload[1] == 0x79:  # auto calibration mode set
+                return True
+            elif payload[1] == 0x87:  # calibration started
+                return True
+            elif payload[1] == 0x88:  # span calibration started
+                return True

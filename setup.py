@@ -30,27 +30,34 @@ def parse_requirements(filename, parent=None):
         else:
             yield candidate
 
+
+with open("README.rst") as f:
+    long_description = f.read()
+
 setup(
-  name='pymh-z19b-serial',
-  version='1.0.2',
-  packages=['mh_z19b'],
-  url='https://github.com/yozik04/pymh-z19b',
-  license='MIT',
-  author='Jevgeni Kiski',
-  author_email='yozik04@gmail.com',
-  description='MH-Z19B CO2 sensor communication via serial port',
-  keywords = 'mh-z19b mh-z19 serial async',
-  classifiers = [
-      'Development Status :: 5 - Production/Stable',
-      'Intended Audience :: Developers',
-      'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
-      'Operating System :: OS Independent',
-      'Programming Language :: Python',
-      'Programming Language :: Python :: 3'
-  ],
-  install_requires=list(parse_requirements('requirements.txt')),
-  tests_require=[
-    'mock',
-    'pytest'
-  ]
+    name='pymh-z19b-serial',
+    version='1.1.0',
+    packages=['mh_z19b'],
+    url='https://github.com/yozik04/pymh-z19b',
+    license='MIT',
+    author='Jevgeni Kiski',
+    author_email='yozik04@gmail.com',
+    description='MH-Z19B CO2 sensor communication via serial port',
+    long_description=long_description,
+    long_description_content_type="text/x-rst",
+    keywords='mh-z19b mh-z19 serial async',
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3'
+    ],
+    python_requires='>=3.5',
+    install_requires=list(parse_requirements('requirements.txt')),
+    tests_require=[
+        'mock',
+        'pytest'
+    ]
 )
