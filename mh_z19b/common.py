@@ -6,6 +6,8 @@ class ReadMetricResponse:
         self.co2 = (payload[2] << 8) + payload[3]
         self.temperature = payload[4] - 40
 
+    def __repr__(self):
+        return "co2: %d, temperature: %d" % (self.co2, self.temperature)
 
 class SensorMixin(object):
     READ_METRIC = b'\xFF\x01\x86\x00\x00\x00\x00\x00'

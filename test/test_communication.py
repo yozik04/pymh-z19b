@@ -18,3 +18,4 @@ def test_parse_read_metric_response():
     assert isinstance(result, ReadMetricResponse)
     assert 645 == result.co2
     assert 25 == result.temperature
+    # assert "co2: 645, temperature: 25" == repr(result)
