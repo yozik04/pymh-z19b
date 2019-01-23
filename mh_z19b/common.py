@@ -1,10 +1,16 @@
 import typing
 
 
+class ReadMetricResponse:
+    def __init__(self, payload):
+        self.co2 = (payload[2] << 8) + payload[3]
+        self.temperature = payload[4] - 40
+
+
 class SensorMixin(object):
     READ_METRIC = b'\xFF\x01\x86\x00\x00\x00\x00\x00'
     START_CALIBRATION = b'\xFF\x01\x87\x00\x00\x00\x00\x00'
-    SET_AUTO_CALIBRARTION = b'\xFF\x01\x79%c\x00\x00\x00\x00\x00'  # on or off
+    SET_AUTO_CALIBRATION = b'\xFF\x01\x79%c\x00\x00\x00\x00\x00'  # on or off
     SET_DETECTION_RANGE = b'\xFF\x01\x99\x00\x00\x00%c%c\x00'  # 2000 or 5000
 
     def __init__(self, serial):
@@ -33,9 +39,7 @@ class SensorMixin(object):
         assert self._checksum(payload) == payload[8], "CRC error"
         if payload[0] == 0xff:
             if payload[1] == 0x86:  # Read command
-                co2 = (payload[2] << 8) + payload[3]
-                temp = payload[4] - 40
-                return {"co2": co2, "temp": temp}
+                return ReadMetricResponse(payload)
             elif payload[1] == 0x99:  # detection range set
                 return True
             elif payload[1] == 0x79:  # auto calibration mode set
@@ -44,3 +48,4 @@ class SensorMixin(object):
                 return True
             elif payload[1] == 0x88:  # span calibration started
                 return True
+        return False
