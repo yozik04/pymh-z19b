@@ -36,7 +36,7 @@ class SensorMixin(object):
 
     def parse_response(self, payload):
         assert len(payload) == 9, "Wrong payload length"
-        assert self._checksum(payload) == payload[8], "CRC error"
+        assert ord(self._checksum(payload)) == payload[8], "CRC error"
         if payload[0] == 0xff:
             if payload[1] == 0x86:  # Read command
                 return ReadMetricResponse(payload)
