@@ -10,10 +10,10 @@ class ReadMetricResponse:
         return "co2: %d, temperature: %d" % (self.co2, self.temperature)
 
 class SensorMixin(object):
-    READ_METRIC = b'\xFF\x01\x86\x00\x00\x00\x00\x00'
-    START_CALIBRATION = b'\xFF\x01\x87\x00\x00\x00\x00\x00'
-    SET_AUTO_CALIBRATION = b'\xFF\x01\x79%c\x00\x00\x00\x00\x00'  # on or off
-    SET_DETECTION_RANGE = b'\xFF\x01\x99\x00\x00\x00%c%c\x00'  # 2000 or 5000
+    READ_METRIC          = b'\xFF\x01\x86\x00\x00\x00\x00\x00'
+    START_CALIBRATION    = b'\xFF\x01\x87\x00\x00\x00\x00\x00'
+    SET_AUTO_CALIBRATION = b'\xFF\x01\x79%c\x00\x00\x00\x00'  # on or off
+    SET_DETECTION_RANGE  = b'\xFF\x01\x99\x00\x00\x00%c%c'    # 2000 or 5000
 
     def __init__(self, serial):
         self.serial = serial
