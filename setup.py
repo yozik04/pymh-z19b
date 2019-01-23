@@ -36,7 +36,7 @@ with open("README.rst") as f:
 
 setup(
     name='pymh-z19b-serial',
-    version='1.2.2',
+    version='1.2.3',
     packages=['mh_z19b'],
     url='https://github.com/yozik04/pymh-z19b',
     license='MIT',
