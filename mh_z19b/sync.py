@@ -48,7 +48,7 @@ class Sensor(SensorMixin):
         on_off_byte = 0xA0 if on else 0x00
         result = self.send_receive(self.SET_AUTO_CALIBRATION % on_off_byte)
         if result:
-            logger.info("Auto calibration set to: %s" % "ON" if on else "OFF")
+            logger.info("Auto calibration set to: %s" % ("ON" if on else "OFF"))
         else:
             logger.error("Failed to set auto calibration setting")
         return result
