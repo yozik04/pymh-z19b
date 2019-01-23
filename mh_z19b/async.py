@@ -20,9 +20,6 @@ class Sensor(SensorMixin):
         self.writer.write(data)
         await self.writer.drain()
 
-    async def read_metric(self):
-        return await self.send_receive(self.READ_METRIC)
-
     async def send_receive(self, command, *args):
         while True:
             await self.send_request(command, *args)
@@ -33,3 +30,17 @@ class Sensor(SensorMixin):
                 return result
             else:
                 await asyncio.sleep(1)
+
+    async def read_metric(self):
+        return await self.send_receive(self.READ_METRIC)
+
+    async def set_detection_range(self, detection_range):
+        assert detection_range in [2000, 5000], "Only 2000 and 5000 ranges are supported"
+        return await self.send_receive(self.SET_DETECTION_RANGE % (detection_range >> 8 & 0xff, detection_range & 0xff))
+
+    async def set_auto_calibration(self, on):
+        on_off_byte = 0xA0 if on else 0x00
+        return await self.send_receive(self.SET_AUTO_CALIBRARTION % on_off_byte)
+
+    async def start_calibration(self):
+        return await self.send_receive(self.START_CALIBRATION)
